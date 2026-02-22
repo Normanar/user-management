@@ -1,5 +1,5 @@
 import { http } from '@/shared/api/http';
-import type { User, UserUpsertDto, UsersListQuery, UsersListResponse } from '../types';
+import type { User, UserCreateDto, UserUpdateDto, UsersListQuery, UsersListResponse } from '../types';
 
 export const userApi = {
     async getUsers(query: UsersListQuery): Promise<UsersListResponse> {
@@ -12,12 +12,12 @@ export const userApi = {
         return res.data;
     },
 
-    async createUser(payload: UserUpsertDto): Promise<User> {
+    async createUser(payload: UserCreateDto): Promise<User> {
         const res = await http.post<User>('/api/users', payload);
         return res.data;
     },
 
-    async updateUser(id: number, payload: UserUpsertDto): Promise<User> {
+    async updateUser(id: number, payload: UserUpdateDto): Promise<User> {
         const res = await http.patch<User>(`/api/users/${id}`, payload);
         return res.data;
     },
