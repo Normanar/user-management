@@ -24,7 +24,7 @@
 
     <template v-else>
       <div class="users-page__table">
-        <UsersTable :items="store.items" />
+        <UsersTable :items="store.items" @edit="onEdit" />
       </div>
 
       <div class="users-page__pagination">
@@ -116,6 +116,10 @@ function onPageChange(page: number): void {
     limit: store.limit,
     search: store.search,
   });
+}
+
+function onEdit(id: number): void {
+  router.push(`/users/${id}/edit`);
 }
 
 onMounted(() => {
