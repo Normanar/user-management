@@ -11,32 +11,42 @@
         class="users-page__search-input"
         placeholder="Search..."
         aria-label="Search users"
+        :disabled="store.isLoading"
       />
     </div>
 
     <div v-if="store.error" class="users-page__error">
-      {{ store.error }}
+      <span>{{ store.error }}</span>
+      <button
+        type="button"
+        class="users-page__retry"
+        @click="store.fetchList()"
+      >
+        Повторить
+      </button>
     </div>
 
-    <div v-else-if="store.isLoading" class="users-page__loading">
-      Loading...
+    <p v-if="store.isLoading" class="users-page__loading">
+      Загрузка...
+    </p>
+
+    <div class="users-page__table">
+      <UsersTable
+        :items="store.items"
+        :is-loading="store.isLoading"
+        @edit="onEdit"
+      />
     </div>
 
-    <template v-else>
-      <div class="users-page__table">
-        <UsersTable :items="store.items" @edit="onEdit" />
-      </div>
-
-      <div class="users-page__pagination">
-        <Pagination
-          :page="store.page"
-          :limit="store.limit"
-          :total="store.total"
-          :disabled="store.isLoading"
-          @change="onPageChange"
-        />
-      </div>
-    </template>
+    <div class="users-page__pagination">
+      <Pagination
+        :page="store.page"
+        :limit="store.limit"
+        :total="store.total"
+        :disabled="store.isLoading"
+        @change="onPageChange"
+      />
+    </div>
   </div>
 </template>
 
@@ -156,12 +166,31 @@ onMounted(() => {
 }
 
 .users-page__error {
-  color: #c00;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   margin-bottom: 1rem;
+  color: #c00;
+}
+
+.users-page__retry {
+  padding: 0.35rem 0.75rem;
+  border: 1px solid #c00;
+  border-radius: 4px;
+  background: transparent;
+  color: #c00;
+  cursor: pointer;
 }
 
 .users-page__loading {
-  margin-bottom: 1rem;
+  margin: 0 0 0.5rem;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.users-page__search-input:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 .users-page__table {

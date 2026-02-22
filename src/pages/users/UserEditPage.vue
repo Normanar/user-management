@@ -7,12 +7,19 @@
     </p>
 
     <template v-else-if="store.isLoading">
-      <p class="user-edit-page__loading">Loading...</p>
+      <p class="user-edit-page__loading">Загрузка...</p>
     </template>
 
-    <p v-else-if="store.error" class="user-edit-page__error">
-      {{ store.error }}
-    </p>
+    <div v-else-if="store.error" class="user-edit-page__error">
+      <span>{{ store.error }}</span>
+      <button
+        type="button"
+        class="user-edit-page__retry"
+        @click="store.fetchOne(id)"
+      >
+        Повторить
+      </button>
+    </div>
 
     <template v-else-if="store.currentUser">
       <p v-if="store.saveError" class="user-edit-page__save-error">
@@ -95,7 +102,23 @@ async function onSubmit(payload: {
   font-size: 1.5rem;
 }
 
-.user-edit-page__error,
+.user-edit-page__error {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 1rem;
+  color: #c00;
+}
+
+.user-edit-page__retry {
+  padding: 0.35rem 0.75rem;
+  border: 1px solid #c00;
+  border-radius: 4px;
+  background: transparent;
+  color: #c00;
+  cursor: pointer;
+}
+
 .user-edit-page__save-error {
   margin: 0 0 1rem;
   color: #c00;

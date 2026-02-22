@@ -54,9 +54,10 @@
       <button
         type="submit"
         class="user-form__submit"
+        :class="{ 'user-form__submit--loading': isSubmitting }"
         :disabled="isSubmitting"
       >
-        {{ submitLabel }}
+        {{ isSubmitting ? 'Сохранение...' : submitLabel }}
       </button>
     </div>
   </form>
@@ -180,8 +181,9 @@ watch(
   color: #fff;
   cursor: pointer;
 
-  &:disabled {
-    opacity: 0.5;
+  &:disabled,
+  &--loading {
+    opacity: 0.7;
     cursor: not-allowed;
   }
 }
