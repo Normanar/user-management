@@ -28,32 +28,20 @@
       </div>
 
       <div class="users-page__pagination">
-        <button
-          type="button"
-          class="users-page__pagination-btn"
-          :disabled="store.page <= 1"
-          @click="goPrev"
-        >
-          Prev
-        </button>
-        <span class="users-page__pagination-info">
-          {{ store.page }} / {{ totalPages }}
-        </span>
-        <button
-          type="button"
-          class="users-page__pagination-btn"
-          :disabled="store.page * store.limit >= store.total"
-          @click="goNext"
-        >
-          Next
-        </button>
+        <Pagination
+          :page="store.page"
+          :limit="store.limit"
+          :total="store.total"
+          :disabled="store.isLoading"
+          @change="onPageChange"
+        />
       </div>
     </template>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, computed } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '@/entities/user/model/userStore';
 import { parseUsersQuery, buildUsersQuery } from '@/entities/user/model/userQueries';
@@ -61,6 +49,7 @@ import { useRouteQuerySync } from '@/shared/composables/useRouteQuerySync';
 import { useDebouncedRef } from '@/shared/composables/useDebouncedRef';
 import type { UsersQueryState } from '@/entities/user/model/userQueries';
 import UsersTable from '@/entities/user/ui/UsersTable.vue';
+import Pagination from '@/shared/ui/Pagination/Pagination.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -120,23 +109,10 @@ watch(
   { deep: true },
 );
 
-const totalPages = computed(() =>
-  store.total > 0 ? Math.ceil(store.total / store.limit) : 1,
-);
-
-function goPrev(): void {
-  if (store.page <= 1) return;
+function onPageChange(page: number): void {
+  if (page === store.page) return;
   applyAndFetch({
-    page: store.page - 1,
-    limit: store.limit,
-    search: store.search,
-  });
-}
-
-function goNext(): void {
-  if (store.page * store.limit >= store.total) return;
-  applyAndFetch({
-    page: store.page + 1,
+    page,
     limit: store.limit,
     search: store.search,
   });
@@ -189,21 +165,6 @@ onMounted(() => {
 }
 
 .users-page__pagination {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.users-page__pagination-btn {
-  padding: 0.5rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background: #fff;
-  cursor: pointer;
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
+  margin-top: 1rem;
 }
 </style>
