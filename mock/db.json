@@ -1,0 +1,144 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "fullName": "Айдос Нурланов",
+      "email": "aidoss.nurlanov@example.com",
+      "createdAt": "2025-12-01T09:15:00.000Z",
+      "status": "active"
+    },
+    {
+      "id": 2,
+      "fullName": "Аружан Сейткалиева",
+      "email": "aruzhan.seitkalieva@example.com",
+      "createdAt": "2025-12-02T10:20:00.000Z",
+      "status": "blocked"
+    },
+    {
+      "id": 3,
+      "fullName": "Нурсултан Ермеков",
+      "email": "nursultan.ermekov@example.com",
+      "createdAt": "2025-12-03T11:05:00.000Z",
+      "status": "active"
+    },
+    {
+      "id": 4,
+      "fullName": "Динара Абдрахманова",
+      "email": "dinara.abdrakhmanova@example.com",
+      "createdAt": "2025-12-04T12:40:00.000Z",
+      "status": "active"
+    },
+    {
+      "id": 5,
+      "fullName": "Ержан Тлеубаев",
+      "email": "erzhan.tleubaev@example.com",
+      "createdAt": "2025-12-05T08:55:00.000Z",
+      "status": "blocked"
+    },
+    {
+      "id": 6,
+      "fullName": "Мадина Касымова",
+      "email": "madina.kassymova@example.com",
+      "createdAt": "2025-12-06T14:10:00.000Z",
+      "status": "active"
+    },
+    {
+      "id": 7,
+      "fullName": "Алихан Жумабеков",
+      "email": "alikhan.zhumabekov@example.com",
+      "createdAt": "2025-12-07T09:35:00.000Z",
+      "status": "active"
+    },
+    {
+      "id": 8,
+      "fullName": "Айым Серикова",
+      "email": "aiym.serikova@example.com",
+      "createdAt": "2025-12-08T16:25:00.000Z",
+      "status": "blocked"
+    },
+    {
+      "id": 9,
+      "fullName": "Бекзат Омаров",
+      "email": "bekzat.omarov@example.com",
+      "createdAt": "2025-12-09T13:45:00.000Z",
+      "status": "active"
+    },
+    {
+      "id": 10,
+      "fullName": "Гаухар Мухамеджанова",
+      "email": "gauhar.mukhamedzhanova@example.com",
+      "createdAt": "2025-12-10T17:00:00.000Z",
+      "status": "active"
+    },
+    {
+      "id": 11,
+      "fullName": "Руслан Кайратов",
+      "email": "ruslan.kairatov@example.com",
+      "createdAt": "2025-12-11T10:10:00.000Z",
+      "status": "blocked"
+    },
+    {
+      "id": 12,
+      "fullName": "Айгерим Турсунова",
+      "email": "aigerim.tursunova@example.com",
+      "createdAt": "2025-12-12T11:50:00.000Z",
+      "status": "active"
+    },
+    {
+      "id": 13,
+      "fullName": "Темирлан Бейсенов",
+      "email": "temirlan.beisenov@example.com",
+      "createdAt": "2025-12-13T08:05:00.000Z",
+      "status": "active"
+    },
+    {
+      "id": 14,
+      "fullName": "Жанель Куанышбаева",
+      "email": "zhanel.kuanyshbayeva@example.com",
+      "createdAt": "2025-12-14T09:45:00.000Z",
+      "status": "blocked"
+    },
+    {
+      "id": 15,
+      "fullName": "Арман Сагындыков",
+      "email": "arman.sagyndykov@example.com",
+      "createdAt": "2025-12-15T15:30:00.000Z",
+      "status": "active"
+    },
+    {
+      "id": 16,
+      "fullName": "Алия Нуртаева",
+      "email": "aliya.nurtayeva@example.com",
+      "createdAt": "2025-12-16T10:25:00.000Z",
+      "status": "blocked"
+    },
+    {
+      "id": 17,
+      "fullName": "Дамир Сапаров",
+      "email": "damir.saparov@example.com",
+      "createdAt": "2025-12-17T12:15:00.000Z",
+      "status": "active"
+    },
+    {
+      "id": 18,
+      "fullName": "Сабина Ибрагимова",
+      "email": "sabina.ibragimova@example.com",
+      "createdAt": "2025-12-18T13:35:00.000Z",
+      "status": "active"
+    },
+    {
+      "id": 19,
+      "fullName": "Мирас Елеуов",
+      "email": "miras.eleuov@example.com",
+      "createdAt": "2025-12-19T09:00:00.000Z",
+      "status": "blocked"
+    },
+    {
+      "id": 20,
+      "fullName": "Назерке Ахметова",
+      "email": "nazerke.akhmetova@example.com",
+      "createdAt": "2025-12-20T14:45:00.000Z",
+      "status": "active"
+    }
+  ]
+}
