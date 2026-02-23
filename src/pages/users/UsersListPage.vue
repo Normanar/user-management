@@ -13,6 +13,9 @@
         aria-label="Search users"
         :disabled="store.isLoading"
       />
+      <RouterLink to="/users/new" class="users-page__create">
+        Создать пользователя
+      </RouterLink>
     </div>
 
     <div v-if="store.error" class="users-page__error">
@@ -145,6 +148,9 @@ onMounted(() => {
 }
 
 .users-page__header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   margin-bottom: 1rem;
 }
 
@@ -153,8 +159,24 @@ onMounted(() => {
   font-size: 1.5rem;
 }
 
+.users-page__create {
+  padding: 0.5rem 1rem;
+  border: 1px solid #333;
+  border-radius: 4px;
+  background: #333;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.875rem;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
 .users-page__search {
   margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .users-page__search-input {

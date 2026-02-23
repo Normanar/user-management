@@ -1,6 +1,9 @@
 <template>
   <div class="user-create-page">
-    <h1 class="user-create-page__title">Создание пользователя</h1>
+    <header class="user-create-page__header">
+      <RouterLink to="/users" class="user-create-page__back">Назад</RouterLink>
+      <h1 class="user-create-page__title">Создание пользователя</h1>
+    </header>
     <p v-if="store.saveError" class="user-create-page__error">
       {{ store.saveError }}
     </p>
@@ -45,6 +48,22 @@ async function onSubmit(payload: {
 <style scoped lang="scss">
 .user-create-page {
   padding: 1rem;
+}
+
+.user-create-page__header {
+  margin-bottom: 1rem;
+}
+
+.user-create-page__back {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  color: #333;
+  text-decoration: none;
+  font-size: 0.875rem;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .user-create-page__title {

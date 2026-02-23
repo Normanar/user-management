@@ -1,6 +1,9 @@
 <template>
   <div class="user-edit-page">
-    <h1 class="user-edit-page__title">Редактирование пользователя</h1>
+    <header class="user-edit-page__header">
+      <RouterLink to="/users" class="user-edit-page__back">Назад</RouterLink>
+      <h1 class="user-edit-page__title">Редактирование пользователя</h1>
+    </header>
 
     <p v-if="invalidId" class="user-edit-page__error">
       Некорректный id
@@ -95,6 +98,22 @@ async function onSubmit(payload: {
 <style scoped lang="scss">
 .user-edit-page {
   padding: 1rem;
+}
+
+.user-edit-page__header {
+  margin-bottom: 1rem;
+}
+
+.user-edit-page__back {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  color: #333;
+  text-decoration: none;
+  font-size: 0.875rem;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .user-edit-page__title {
