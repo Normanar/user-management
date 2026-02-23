@@ -73,6 +73,47 @@ src/
     └── db.json                   # Данные для mock API
 ```
 
+## Подробно: что в папках src (для собеседования)
+
+### app/
+
+**Роль:** настройка приложения и глобальные ресурсы.
+
+- **router/index.ts** — конфигурация Vue Router: маршруты `/users`, `/users/new`, `/users/:id/edit`, редирект остального на `/users`. Lazy-load компонентов через `() => import(...)`.
+- **styles/** — глобальные стили: сброс (box-sizing, body), шрифты, переменные цветов/отступов (`variables.scss`). Подключаются в `main.ts` через `index.scss`.
+
+### entities/user/
+
+**Роль:** вся логика и UI, связанные с сущностью «пользователь». Не знает про роутер и другие сущности.
+
+- **types.ts** — типы по контракту API: `User`, `UserStatus`, `UserCreateDto` (с `createdAt`), `UserUpdateDto` (без него), `UsersListQuery`, `UsersListResponse`. Один источник правды для API.
+- **api/userApi.ts** — тонкая обёртка над `http`: `getUsers(query)`, `getUser(id)`, `createUser(payload)`, `updateUser(id, payload)`. Только вызовы HTTP, без store и router.
+- **model/userQueries.ts** — работа с query-параметрами списка: константы `DEFAULT_USERS_PAGE`, `DEFAULT_USERS_LIMIT`, `MAX_USERS_LIMIT`; `parseUsersQuery(query)` — из сырого query (строки/массивы) в `{ page, limit, search }` с проверками и дефолтами; `buildUsersQuery(state)` — из state в объект для `router.replace({ query })`, без дефолтных значений.
+- **model/userStore.ts** — Pinia store (Composition API): состояние списка (`items`, `total`, `page`, `limit`, `search`, `isLoading`, `error`), состояние карточки/форм (`currentUser`, `isDetailLoading`, `detailError`, `isSaving`, `saveError`). Экшены: `applyQuery`, `fetchList` (с защитой от гонок по `listRequestId`), `fetchOne`, `create` (добавляет `createdAt`), `update`, сбросы `resetListState`, `resetDetailState`, `resetSaveError`.
+- **ui/UserForm.vue** — презентационная форма: props `initialValue`, `mode`, `isSubmitting`; emit `submit(payload)`. Использует `useValidate` (required, email, maxLength, oneOf для status), не вызывает API и не знает про store/router.
+- **ui/UsersTable.vue** — презентационная таблица: props `items`, `isLoading`; emit `edit(id)`. Показывает колонки, загрузку, пустое состояние, кнопку «Редактировать». Не знает про store и API.
+
+### pages/users/
+
+**Роль:** сборка экранов: связывают маршрут, store, composables и UI-компоненты. Вся «проводка» живёт здесь.
+
+- **UsersListPage.vue** — список: `useRouteQuerySync` (parse/build из userQueries, store как источник и приёмник state), debounce поиска через `useDebouncedRef`, вызовы `fetchList` при смене query/поиска/страницы, кнопка «Создать», таблица и пагинация. При уходе — `resetListState`.
+- **UserCreatePage.vue** — создание: начальные значения формы, при submit — `store.create(payload)`, при успехе `router.replace('/users')`, показ `saveError`. При уходе — `resetSaveError`.
+- **UserEditPage.vue** — редактирование: `id` из `route.params`, проверка на валидность; при монтировании `fetchOne(id)`; форма показывается после загрузки, initialValue из `currentUser`; при submit — `store.update(id, payload)` и редирект; показ `detailError` и `saveError`. При уходе — `resetDetailState`.
+
+### shared/
+
+**Роль:** код без привязки к конкретной сущности, переиспользуемый в разных фичах.
+
+- **api/http.ts** — один axios-инстанс: `baseURL` из env (или localhost:3001), таймаут, заголовки. Interceptor: при ошибке достаёт сообщение из ответа или «Ошибка сети» и пробрасывает `Error(message)`.
+- **composables/useDebouncedRef.ts** — принимает `Ref` и задержку; возвращает readonly ref, который обновляется с debounce; сброс таймера при новом значении и при unmount.
+- **composables/useRouteQuerySync.ts** — синхронизация state с URL: приходит `routeQuery`, `replaceQuery`, `parse`, `build`, `onRouteChange`, `getState`. Даёт `syncFromRoute()` (парсит query и вызывает `onRouteChange`) и `syncToRoute()` (собирает query из state и вызывает `replaceQuery` при отличии). Внутри — защита от цикла через запоминание последнего записанного query. Есть хелпер `normalizeQuery` для сравнения.
+- **composables/useValidate.ts** — универсальная валидация форм: `useValidate(initialValues, schema)` возвращает `values`, `errors`, `touched`, `setValues`, `setField`, `validateField`, `validateAll`, `touchField`, `touchAll`, `reset`. Правила: `required`, `email`, `maxLength(n)`, `oneOf(allowed)` — все возвращают `string | null`.
+- **lib/formatDate.ts** — форматирование ISO-строки даты в читаемый вид (дата + время).
+- **ui/Pagination/** — компонент пагинации: props `page`, `limit`, `total`, `disabled`; emit `change(page)`. Кнопки «Назад»/«Вперёд» и до 5 номеров страниц вокруг текущей.
+
+На собеседовании можно сказать: **app** — роутинг и глобальные стили; **entities** — типы, API, store и UI одной сущности; **pages** — композиция экранов и связка с роутером и store; **shared** — общий HTTP-клиент, composables (валидация, debounce, URL sync) и переиспользуемые UI-компоненты.
+
 ## Архитектура и разделение ответственности
 
 | Слой                    | Что делает                                                        | Что запрещено                     |
