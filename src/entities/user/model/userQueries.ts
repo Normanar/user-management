@@ -1,5 +1,6 @@
 export const DEFAULT_USERS_PAGE = 1;
 export const DEFAULT_USERS_LIMIT = 5;
+export const MAX_USERS_LIMIT = 100;
 
 export type UsersQueryState = {
     page: number;
@@ -23,9 +24,10 @@ function parseIntClamp(value: unknown, min: number, fallback: number): number {
 }
 
 export function parseUsersQuery(query: Record<string, unknown>): UsersQueryState {
+    const rawLimit = parseIntClamp(query.limit, 1, DEFAULT_USERS_LIMIT);
     return {
         page: parseIntClamp(query.page, 1, DEFAULT_USERS_PAGE),
-        limit: parseIntClamp(query.limit, 1, DEFAULT_USERS_LIMIT),
+        limit: Math.min(MAX_USERS_LIMIT, rawLimit),
         search: toQueryString(query.search).trim(),
     };
 }

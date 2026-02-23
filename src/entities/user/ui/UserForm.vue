@@ -7,6 +7,7 @@
         :value="values.fullName"
         type="text"
         class="user-form__input"
+        :maxlength="MAX_FULL_NAME_LENGTH"
         :disabled="isSubmitting"
         @input="(e) => setField('fullName', (e.target as HTMLInputElement).value)"
         @blur="onBlur('fullName')"
@@ -23,6 +24,7 @@
         :value="values.email"
         type="email"
         class="user-form__input"
+        :maxlength="MAX_EMAIL_LENGTH"
         :disabled="isSubmitting"
         @input="(e) => setField('email', (e.target as HTMLInputElement).value)"
         @blur="onBlur('email')"
@@ -39,7 +41,7 @@
         :value="values.status"
         class="user-form__select"
         :disabled="isSubmitting"
-        @change="(e) => setField('status', (e.target as HTMLSelectElement).value as UserStatus)"
+        @change="onStatusChange"
         @blur="onBlur('status')"
       >
         <option value="active">Активен</option>
@@ -65,8 +67,12 @@
 
 <script setup lang="ts">
 import { watch, computed } from 'vue';
-import { useValidate, required, email } from '@/shared/composables/useValidate';
+import { useValidate, required, email, maxLength, oneOf } from '@/shared/composables/useValidate';
 import type { UserStatus } from '@/entities/user/types';
+
+const MAX_FULL_NAME_LENGTH = 255;
+const MAX_EMAIL_LENGTH = 255;
+const ALLOWED_STATUSES: UserStatus[] = ['active', 'blocked'];
 
 type FormValues = {
   fullName: string;
@@ -108,9 +114,9 @@ const {
 } = useValidate<FormValues>(
   { fullName: '', email: '', status: 'active' },
   {
-    fullName: [required()],
-    email: [required(), email()],
-    status: [required()],
+    fullName: [required(), maxLength(MAX_FULL_NAME_LENGTH)],
+    email: [required(), email(), maxLength(MAX_EMAIL_LENGTH)],
+    status: [required(), oneOf(ALLOWED_STATUSES)],
   },
 );
 
@@ -125,6 +131,14 @@ function showError(key: keyof FormValues): boolean {
 function onBlur(key: keyof FormValues): void {
   touchField(key);
   validateField(key);
+}
+
+function onStatusChange(e: Event): void {
+  const raw = (e.target as HTMLSelectElement).value;
+  const value: UserStatus = ALLOWED_STATUSES.includes(raw as UserStatus)
+    ? (raw as UserStatus)
+    : 'active';
+  setField('status', value);
 }
 
 function onSubmit(): void {

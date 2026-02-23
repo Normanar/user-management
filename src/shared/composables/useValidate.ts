@@ -112,6 +112,22 @@ export const email = (msg = 'Некорректный email'): Rule<string> => (
   return EMAIL_REGEX.test(String(value).trim()) ? null : msg;
 };
 
+export const maxLength = (
+  max: number,
+  msg = `Не более ${max} символов`,
+): Rule<string> => (value) => {
+  if (value === undefined || value === null) return null;
+  const s = String(value);
+  return s.length > max ? msg : null;
+};
+
+export const oneOf = <T>(allowed: readonly T[], msg = 'Недопустимое значение'): Rule<T> => (
+  value,
+) => {
+  if (value === undefined || value === null) return null;
+  return allowed.includes(value) ? null : msg;
+};
+
 /*
 Usage example (form with fullName, email, status):
 
