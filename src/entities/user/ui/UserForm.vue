@@ -1,7 +1,7 @@
 <template>
   <form class="user-form" @submit.prevent="onSubmit">
     <div class="user-form__field">
-      <label class="user-form__label" for="user-form-fullName">Full Name</label>
+      <label class="user-form__label" for="user-form-fullName">ФИО</label>
       <input
         id="user-form-fullName"
         :value="values.fullName"
@@ -17,7 +17,7 @@
     </div>
 
     <div class="user-form__field">
-      <label class="user-form__label" for="user-form-email">Email</label>
+      <label class="user-form__label" for="user-form-email">Эл. почта</label>
       <input
         id="user-form-email"
         :value="values.email"
@@ -33,7 +33,7 @@
     </div>
 
     <div class="user-form__field">
-      <label class="user-form__label" for="user-form-status">Status</label>
+      <label class="user-form__label" for="user-form-status">Статус</label>
       <select
         id="user-form-status"
         :value="values.status"
@@ -142,6 +142,8 @@ watch(
 </script>
 
 <style scoped lang="scss">
+@use '@/app/styles/variables.scss' as *;
+
 .user-form {
   max-width: 24rem;
 }
@@ -159,13 +161,13 @@ watch(
 .user-form__select {
   width: 100%;
   padding: 0.5rem 0.75rem;
-  border: 1px solid #ccc;
+  border: 1px solid $color-border;
   border-radius: 4px;
 }
 
 .user-form__error {
   margin: 0.25rem 0 0;
-  color: #c00;
+  color: $color-error;
   font-size: 0.875rem;
 }
 
@@ -175,10 +177,10 @@ watch(
 
 .user-form__submit {
   padding: 0.5rem 1rem;
-  border: 1px solid #333;
+  border: 1px solid $color-primary;
   border-radius: 4px;
-  background: #333;
-  color: #fff;
+  background: $color-primary;
+  color: $color-on-primary;
   cursor: pointer;
 
   &:disabled,

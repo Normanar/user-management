@@ -4,16 +4,16 @@
       <thead class="users-table__head">
         <tr class="users-table__row">
           <th class="users-table__cell">ID</th>
-          <th class="users-table__cell">Full Name</th>
+          <th class="users-table__cell">ФИО</th>
           <th class="users-table__cell">Email</th>
-          <th class="users-table__cell">Created At</th>
-          <th class="users-table__cell">Status</th>
-          <th class="users-table__cell users-table__cell--actions">Actions</th>
+          <th class="users-table__cell">Дата создания</th>
+          <th class="users-table__cell">Статус</th>
+          <th class="users-table__cell users-table__cell--actions">Действия</th>
         </tr>
       </thead>
       <tbody>
         <tr v-if="isLoading" class="users-table__row users-table__loading">
-          <td colspan="6" class="users-table__cell">Loading...</td>
+          <td colspan="6" class="users-table__cell">Загрузка...</td>
         </tr>
         <tr v-else-if="items.length === 0" class="users-table__row users-table__empty">
           <td colspan="6" class="users-table__cell">Нет пользователей</td>
@@ -69,6 +69,8 @@ function statusLabel(status: UserStatus): string {
 </script>
 
 <style scoped lang="scss">
+@use '@/app/styles/variables.scss' as *;
+
 .users-table__table {
   width: 100%;
   border-collapse: collapse;
@@ -81,7 +83,7 @@ function statusLabel(status: UserStatus): string {
 
 .users-table__cell {
   padding: 0.5rem 0.75rem;
-  border: 1px solid #ccc;
+  border: 1px solid $color-border;
 }
 
 .users-table__cell--actions {
@@ -90,24 +92,24 @@ function statusLabel(status: UserStatus): string {
 }
 
 .users-table__status--active {
-  color: #0a0;
+  color: $color-success;
 }
 
 .users-table__status--blocked {
-  color: #c00;
+  color: $color-error;
 }
 
 .users-table__loading .users-table__cell,
 .users-table__empty .users-table__cell {
   text-align: center;
-  color: #666;
+  color: $color-text-muted;
 }
 
 .users-table__btn {
   padding: 0.35rem 0.75rem;
-  border: 1px solid #ccc;
+  border: 1px solid $color-border;
   border-radius: 4px;
-  background: #fff;
+  background: $color-bg;
   cursor: pointer;
 }
 </style>

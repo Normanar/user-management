@@ -9,7 +9,7 @@
         :disabled="prevDisabled"
         @click="goPrev"
       >
-        Prev
+        Назад
       </button>
       <button
         v-for="n in pageNumbers"
@@ -28,7 +28,7 @@
         :disabled="nextDisabled"
         @click="goNext"
       >
-        Next
+        Вперёд
       </button>
     </div>
   </div>
@@ -96,6 +96,8 @@ function goTo(n: number): void {
 </script>
 
 <style scoped lang="scss">
+@use '@/app/styles/variables.scss' as *;
+
 .pagination {
   display: flex;
   align-items: center;
@@ -116,15 +118,15 @@ function goTo(n: number): void {
 .pagination__button {
   min-width: 2.25rem;
   padding: 0.5rem;
-  border: 1px solid #ccc;
+  border: 1px solid $color-border;
   border-radius: 4px;
-  background: #fff;
+  background: $color-bg;
   cursor: pointer;
 
   &--active {
     font-weight: 600;
-    border-color: #333;
-    background: #f0f0f0;
+    border-color: $color-border-dark;
+    background: $color-bg-secondary;
   }
 
   &--disabled,

@@ -51,6 +51,8 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped lang="scss">
+@use '@/app/styles/variables.scss' as *;
+
 .user-create-page {
   padding: 1rem;
 }
@@ -62,7 +64,7 @@ onBeforeUnmount(() => {
 .user-create-page__back {
   display: inline-block;
   margin-bottom: 0.5rem;
-  color: #333;
+  color: $color-text;
   text-decoration: none;
   font-size: 0.875rem;
 
@@ -78,6 +80,6 @@ onBeforeUnmount(() => {
 
 .user-create-page__error {
   margin: 0 0 1rem;
-  color: #c00;
+  color: $color-error;
 }
 </style>

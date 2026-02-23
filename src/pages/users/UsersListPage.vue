@@ -1,7 +1,7 @@
 <template>
   <div class="users-page">
     <header class="users-page__header">
-      <h1 class="users-page__title">Users</h1>
+      <h1 class="users-page__title">Пользователи</h1>
     </header>
 
     <div class="users-page__search">
@@ -9,8 +9,8 @@
         v-model="searchInput"
         type="text"
         class="users-page__search-input"
-        placeholder="Search..."
-        aria-label="Search users"
+        placeholder="Поиск..."
+        aria-label="Поиск пользователей"
         :disabled="store.isLoading"
       />
       <RouterLink to="/users/new" class="users-page__create">
@@ -28,10 +28,6 @@
         Повторить
       </button>
     </div>
-
-    <p v-if="store.isLoading" class="users-page__loading">
-      Загрузка...
-    </p>
 
     <div class="users-page__table">
       <UsersTable
@@ -147,6 +143,8 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped lang="scss">
+@use '@/app/styles/variables.scss' as *;
+
 .users-page {
   padding: 1rem;
 }
@@ -165,10 +163,10 @@ onBeforeUnmount(() => {
 
 .users-page__create {
   padding: 0.5rem 1rem;
-  border: 1px solid #333;
+  border: 1px solid $color-primary;
   border-radius: 4px;
-  background: #333;
-  color: #fff;
+  background: $color-primary;
+  color: $color-on-primary;
   text-decoration: none;
   font-size: 0.875rem;
 
@@ -187,7 +185,7 @@ onBeforeUnmount(() => {
   padding: 0.5rem 0.75rem;
   width: 100%;
   max-width: 20rem;
-  border: 1px solid #ccc;
+  border: 1px solid $color-border;
   border-radius: 4px;
 }
 
@@ -196,22 +194,16 @@ onBeforeUnmount(() => {
   align-items: center;
   gap: 0.75rem;
   margin-bottom: 1rem;
-  color: #c00;
+  color: $color-error;
 }
 
 .users-page__retry {
   padding: 0.35rem 0.75rem;
-  border: 1px solid #c00;
+  border: 1px solid $color-error;
   border-radius: 4px;
   background: transparent;
-  color: #c00;
+  color: $color-error;
   cursor: pointer;
-}
-
-.users-page__loading {
-  margin: 0 0 0.5rem;
-  font-size: 0.875rem;
-  color: #666;
 }
 
 .users-page__search-input:disabled {

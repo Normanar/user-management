@@ -100,6 +100,8 @@ async function onSubmit(payload: {
 </script>
 
 <style scoped lang="scss">
+@use '@/app/styles/variables.scss' as *;
+
 .user-edit-page {
   padding: 1rem;
 }
@@ -111,7 +113,7 @@ async function onSubmit(payload: {
 .user-edit-page__back {
   display: inline-block;
   margin-bottom: 0.5rem;
-  color: #333;
+  color: $color-text;
   text-decoration: none;
   font-size: 0.875rem;
 
@@ -130,21 +132,21 @@ async function onSubmit(payload: {
   align-items: center;
   gap: 0.75rem;
   margin: 0 0 1rem;
-  color: #c00;
+  color: $color-error;
 }
 
 .user-edit-page__retry {
   padding: 0.35rem 0.75rem;
-  border: 1px solid #c00;
+  border: 1px solid $color-error;
   border-radius: 4px;
   background: transparent;
-  color: #c00;
+  color: $color-error;
   cursor: pointer;
 }
 
 .user-edit-page__save-error {
   margin: 0 0 1rem;
-  color: #c00;
+  color: $color-error;
 }
 
 .user-edit-page__loading {

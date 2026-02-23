@@ -12,7 +12,7 @@ http.interceptors.response.use(
         const message =
             error?.response?.data?.message ??
             error?.message ??
-            'Network error';
+            'Ошибка сети';
 
         return Promise.reject(new Error(message));
     },
