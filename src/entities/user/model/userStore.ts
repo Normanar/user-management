@@ -14,6 +14,8 @@ export const useUserStore = defineStore('user', () => {
     const error = ref<string | null>(null);
 
     const currentUser = ref<User | null>(null);
+    const isDetailLoading = ref(false);
+    const detailError = ref<string | null>(null);
     const isSaving = ref(false);
     const saveError = ref<string | null>(null);
 
@@ -49,16 +51,16 @@ export const useUserStore = defineStore('user', () => {
     }
 
     async function fetchOne(id: number): Promise<void> {
-        isLoading.value = true;
-        error.value = null;
+        isDetailLoading.value = true;
+        detailError.value = null;
         currentUser.value = null;
         try {
             const user = await userApi.getUser(id);
             currentUser.value = user;
         } catch (e) {
-            error.value = e instanceof Error ? e.message : String(e);
+            detailError.value = e instanceof Error ? e.message : String(e);
         } finally {
-            isLoading.value = false;
+            isDetailLoading.value = false;
         }
     }
 
@@ -94,6 +96,20 @@ export const useUserStore = defineStore('user', () => {
         }
     }
 
+    function resetListState(): void {
+        error.value = null;
+    }
+
+    function resetDetailState(): void {
+        currentUser.value = null;
+        detailError.value = null;
+        saveError.value = null;
+    }
+
+    function resetSaveError(): void {
+        saveError.value = null;
+    }
+
     return {
         items,
         total,
@@ -103,6 +119,8 @@ export const useUserStore = defineStore('user', () => {
         isLoading,
         error,
         currentUser,
+        isDetailLoading,
+        detailError,
         isSaving,
         saveError,
         applyQuery,
@@ -110,5 +128,8 @@ export const useUserStore = defineStore('user', () => {
         fetchOne,
         create,
         update,
+        resetListState,
+        resetDetailState,
+        resetSaveError,
     };
 });

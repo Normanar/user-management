@@ -54,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '@/entities/user/model/userStore';
 import { parseUsersQuery, buildUsersQuery } from '@/entities/user/model/userQueries';
@@ -139,6 +139,10 @@ onMounted(() => {
   syncFromRoute();
   searchInput.value = store.search;
   store.fetchList();
+});
+
+onBeforeUnmount(() => {
+  store.resetListState();
 });
 </script>
 

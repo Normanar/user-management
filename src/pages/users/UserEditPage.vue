@@ -9,12 +9,12 @@
       Некорректный id
     </p>
 
-    <template v-else-if="store.isLoading">
+    <template v-else-if="store.isDetailLoading">
       <p class="user-edit-page__loading">Загрузка...</p>
     </template>
 
-    <div v-else-if="store.error" class="user-edit-page__error">
-      <span>{{ store.error }}</span>
+    <div v-else-if="store.detailError" class="user-edit-page__error">
+      <span>{{ store.detailError }}</span>
       <button
         type="button"
         class="user-edit-page__retry"
@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, onMounted, onBeforeUnmount, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '@/entities/user/model/userStore';
 import UserForm from '@/entities/user/ui/UserForm.vue';
@@ -78,6 +78,10 @@ watch(
 onMounted(() => {
   if (invalidId.value) return;
   store.fetchOne(id.value);
+});
+
+onBeforeUnmount(() => {
+  store.resetDetailState();
 });
 
 async function onSubmit(payload: {

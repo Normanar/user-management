@@ -17,6 +17,7 @@
 </template>
 
 <script setup lang="ts">
+import { onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/entities/user/model/userStore';
 import UserForm from '@/entities/user/ui/UserForm.vue';
@@ -43,6 +44,10 @@ async function onSubmit(payload: {
     // saveError already set in store
   }
 }
+
+onBeforeUnmount(() => {
+  store.resetSaveError();
+});
 </script>
 
 <style scoped lang="scss">
